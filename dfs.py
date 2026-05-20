@@ -1,6 +1,7 @@
 from mazegen import Maze
 import random
 
+
 class MazeGenerator:
     def __init__(self, width: int, height: int, seed: int = None):
         self.visit = set()
