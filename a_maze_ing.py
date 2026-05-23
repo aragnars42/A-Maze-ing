@@ -2,7 +2,8 @@ from parse import parse
 from dfs import MazeGenerator
 from output import write_maze
 from bfs import bfs_short
-
+from graphics import Graphics
+from libmlx import *
 
 if __name__ == '__main__':
     maze_parse = parse()
@@ -20,6 +21,15 @@ if __name__ == '__main__':
     test = bfs_short(
         gen.maz, (maze_parse["ENTRY"][0], maze_parse["ENTRY"][1]),
         (maze_parse["EXIT"][0], maze_parse["EXIT"][1]))
+    
+	#adding graphics to test
+    gfx = Graphics(
+        gen.maz,
+        (maze_parse["ENTRY"][0], maze_parse["ENTRY"][1]),
+        (maze_parse["EXIT"][0], maze_parse["EXIT"][1]),
+        test
+    )
+    gfx.render()
 
     # write the path found with bfs_short
     write_maze(

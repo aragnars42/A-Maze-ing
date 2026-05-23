@@ -2,7 +2,7 @@
 
 import sys
 sys.path.insert(0, "/Users/andy/MLX42/ffi/python")
-from libmlx42 import *
+from libmlx import *
 from typing import List, Tuple
 from mazegen import Maze
 
@@ -23,7 +23,7 @@ class Graphics:
 		try:
 			self.window_width = self.maze.width * self.cell_size
 			self.window_height = self.maze.height * self.cell_size
-			self.window = mlx.mlx_init(self.window_width, self.window_height, "A-Maze-ing", True)
+			self.window = mlx.mlx_init(self.window_width, self.window_height, b"A-Maze-ing", True)
 			self.image = mlx.mlx_new_image(self.window, self.window_width, self.window_height)
 		except IOError as e:
 			print("ERROR - Unable to create window", e)
@@ -46,10 +46,10 @@ class Graphics:
 			if direction == 'W':
 				current_x = current_x - 1
 			if 0 <= current_x < self.maze.width and 0 <= current_y < self.maze.height:
-				current_x = current_x * self.cell_size
-				current_y = current_y * self.cell_size
-				for screen_x in range(current_x, current_x + self.cell_size):
-					for screen_y in range(current_y, current_y + self.cell_size):
+				pixel_x = current_x * self.cell_size
+				pixel_y = current_y * self.cell_size
+				for screen_x in range(pixel_x, pixel_x + self.cell_size):
+					for screen_y in range(pixel_y, pixel_y + self.cell_size):
 						mlx.mlx_put_pixel(self.image, screen_x, screen_y, COLOR_PATH)
 		exit_x = self.exit_pos[0] * self.cell_size
 		exit_y = self.exit_pos[1] * self.cell_size
@@ -65,7 +65,7 @@ class Graphics:
 				pixel_y = y * self.cell_size
 				if self.maze.has_wall(x, y, 0):
 					for screen_x in range(pixel_x, pixel_x + self.cell_size):
-					    mlx.mlx_put_pixel(self.image, screen_x, pixel_y, COLOR_WALL)
+						mlx.mlx_put_pixel(self.image, screen_x, pixel_y, COLOR_WALL)
 				if self.maze.has_wall(x, y, 1):
 					for screen_y in range(pixel_y, pixel_y + self.cell_size):
 						mlx.mlx_put_pixel(self.image, pixel_x + self.cell_size, screen_y, COLOR_WALL)
@@ -78,12 +78,7 @@ class Graphics:
 
 	def render(self) -> None:
 		self.image = mlx.mlx_new_image(self.window, self.window_width, self.window_height)
-		self.draw_maze()
 		self.draw_entry_exit_path()
+		self.draw_maze()
 		mlx.mlx_image_to_window(self.window, self.image, 0, 0)
-		mlx.mlx_loop_hook(self.window, self.loop_hook, self)
 		mlx.mlx_loop(self.window)
-
-	def loop_hook(self) -> None:
-		if mlx.mlx_is_key_down(self.window, 65307):
-			mlx.mlx_close_window(self.window)
