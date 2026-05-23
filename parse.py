@@ -99,7 +99,3 @@ def parse():
         sys.exit(1)
 
     return config
-
-
-if __name__ == '__main__':
-    parse()
