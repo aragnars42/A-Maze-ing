@@ -17,11 +17,14 @@ if __name__ == '__main__':
     # open up walls from the ENTRY
     gen.generate(maze_parse["ENTRY"][0], maze_parse["ENTRY"][1])
 
+    #42
+    gen.draw()
+
     # find path to connect the entry to the eit
-    test = bfs_short(
-        gen.maz, (maze_parse["ENTRY"][0], maze_parse["ENTRY"][1]),
+    test = bfs_short(gen.maz, (maze_parse["ENTRY"][0], maze_parse["ENTRY"][1]),
         (maze_parse["EXIT"][0], maze_parse["EXIT"][1]))
     
+<<<<<<< HEAD
 	#adding graphics to test
     gfx = Graphics(
         gen.maz,
@@ -30,6 +33,8 @@ if __name__ == '__main__':
         test
     )
     gfx.render()
+=======
+>>>>>>> new
 
     # write the path found with bfs_short
     write_maze(

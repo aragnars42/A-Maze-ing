@@ -49,3 +49,37 @@ class MazeGenerator:
                 self.stack.append((nx, ny))
             else:
                 self.stack.pop()
+
+    def draw(self):
+        num_4 = [
+            (1,0), (3,0),
+            (1,1), (3,1),
+            (1,2), (2,2), (3,2),
+            (3,3),
+            (3,4)
+        ]
+        num_2 = [
+            (1,0),(2,0),(3,0),
+            (3,1),
+            (1,2),(2,2),(3,2),
+            (1,3),
+            (1,4),(2,4),(3,4)
+        ]
+        center_w = self.maz.width // 2
+        center_h = self.maz.height // 2
+    
+        for dx, dy in num_4:
+            x = center_w + dx
+            y = center_h + dy
+            self.maz.close_wall(x, y, 0)
+            self.maz.close_wall(x, y, 1)
+            self.maz.close_wall(x, y, 2)
+            self.maz.close_wall(x, y, 3)
+
+        for xd, yd in num_2: 
+            xx = center_w + xd + 5
+            yy = center_h + yd
+            self.maz.close_wall(xx, yy, 0)
+            self.maz.close_wall(xx, yy, 1)
+            self.maz.close_wall(xx, yy, 2)
+            self.maz.close_wall(xx, yy, 3)

@@ -101,3 +101,4 @@ class Maze:
             2D list of integers representing wall states.
         """
         return self.cells
+    
