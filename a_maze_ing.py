@@ -1,9 +1,9 @@
 from parse import parse
-from dfs import MazeGenerator
+from mazegen.dfs import MazeGenerator
 from output import write_maze
 from bfs import bfs_short
-from graphics import Graphics
-from libmlx import *
+#from graphics import Graphics
+#from libmlx import *
 
 if __name__ == '__main__':
     maze_parse = parse()
@@ -17,24 +17,26 @@ if __name__ == '__main__':
     # open up walls from the ENTRY
     gen.generate(maze_parse["ENTRY"][0], maze_parse["ENTRY"][1])
 
-    #42
-    gen.draw()
 
     # find path to connect the entry to the eit
     test = bfs_short(gen.maz, (maze_parse["ENTRY"][0], maze_parse["ENTRY"][1]),
         (maze_parse["EXIT"][0], maze_parse["EXIT"][1]))
     
-<<<<<<< HEAD
+    #42
+    gen.draw()
+
+    # 3X3 walls
+    gen.check_wall()
+
 	#adding graphics to test
-    gfx = Graphics(
+
+    """gfx = Graphics(
         gen.maz,
         (maze_parse["ENTRY"][0], maze_parse["ENTRY"][1]),
         (maze_parse["EXIT"][0], maze_parse["EXIT"][1]),
         test
-    )
-    gfx.render()
-=======
->>>>>>> new
+    )"""
+    #gfx.render()
 
     # write the path found with bfs_short
     write_maze(

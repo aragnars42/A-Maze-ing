@@ -4,7 +4,7 @@ import sys
 sys.path.insert(0, "/Users/andy/MLX42/ffi/python")
 from libmlx import *
 from typing import List, Tuple
-from mazegen import Maze
+from mazegen.mazegen import Maze
 
 COLOR_WALL = 0xD9ADD1FF
 COLOR_ENTRY = 0xD896CFFF

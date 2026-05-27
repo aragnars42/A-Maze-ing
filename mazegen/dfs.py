@@ -1,4 +1,4 @@
-from mazegen import Maze
+from mazegen.mazegen import Maze
 import random
 
 
@@ -11,7 +11,7 @@ class MazeGenerator:
         if seed is not None:
             random.seed(seed)
 
-        self. directions = [
+        self.directions = [
             {"dx": 0,  "dy": -1, "direc": 0, "opposite": 2}, #up
             {"dx": 0,  "dy": 1,  "direc": 2, "opposite": 0}, #down
             {"dx": -1, "dy": 0,  "direc": 3, "opposite": 1}, #left (esquerda)
@@ -65,8 +65,8 @@ class MazeGenerator:
             (1,3),
             (1,4),(2,4),(3,4)
         ]
-        center_w = self.maz.width // 2
-        center_h = self.maz.height // 2
+        center_w = self.maz.width // 2 - 5
+        center_h = self.maz.height // 2 - 5
     
         for dx, dy in num_4:
             x = center_w + dx
@@ -83,3 +83,17 @@ class MazeGenerator:
             self.maz.close_wall(xx, yy, 1)
             self.maz.close_wall(xx, yy, 2)
             self.maz.close_wall(xx, yy, 3)
+
+    def check_wall(self):
+        for x in range(self.maz.width - 2):        
+            for y in range(self.maz.height - 2):
+                if (not self.maz.has_wall(x, y, 1) and not
+                self.maz.has_wall(x+1, y, 1) and not
+                self.maz.has_wall(x, y+1, 1) and not 
+                self.maz.has_wall(x+1, y+1, 1) and not
+                self.maz.has_wall(x, y, 2) and not
+                self.maz.has_wall(x+1, y, 2) and not
+                self.maz.has_wall(x, y+1, 2) and not 
+                self.maz.has_wall(x+1, y+1, 2)):
+                    self.maz.close_wall(x+1, y, 1)
+                    self.maz.close_wall(x+2, y, 3)
