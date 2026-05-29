@@ -1,7 +1,7 @@
 """not finished"""
 
 import sys
-sys.path.insert(0, "/Users/andy/MLX42/ffi/python")
+sys.path.insert(0, str(Path(__file__).resolve().parent / "MLX42" / "ffi" / "python"))
 from libmlx import *
 from typing import List, Tuple
 from mazegen import Maze
