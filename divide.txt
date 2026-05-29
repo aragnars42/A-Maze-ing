@@ -1,9 +1,0 @@
-Thay: parsing
--algorithm start
--learn binary, to open cells
-
-
-Andy: mazegen
--list of a list with all of the cells that are closed
--learn binary, to close cells
--

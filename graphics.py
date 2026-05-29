@@ -1,16 +1,20 @@
-"""not finished"""
+# Draws the maze, the 42, and the path using MLX42.
 
 import sys
-sys.path.insert(0, str(Path(__file__).resolve().parent / "MLX42" / "ffi" / "python"))
+import os, sys
+sys.path.insert(0, os.path.expanduser("~/MLX42/ffi/python"))
 from libmlx import *
 from typing import List, Tuple
 from mazegen.mazegen import Maze
 
+# Maze color selection
 COLOR_WALL = 0xD9ADD1FF
 COLOR_ENTRY = 0xD896CFFF
 COLOR_EXIT = 0xCBCADCFF
 COLOR_PATH = 0xFFD699FF
 
+
+# Handles window creation and maze rendering.
 class Graphics:
 	def __init__(self, maze, entry: Tuple[int, int], exit_pos: Tuple[int, int], path: str):
 		self.maze = maze
@@ -28,6 +32,7 @@ class Graphics:
 		except IOError as e:
 			print("ERROR - Unable to create window", e)
 
+    # Paint entry, path, and exit cells.
 	def draw_entry_exit_path(self) -> None:
 		entry_x = self.entry[0] * self.cell_size
 		entry_y = self.entry[1] * self.cell_size
@@ -57,12 +62,23 @@ class Graphics:
 			for screen_y in range(exit_y, exit_y + self.cell_size):
 				mlx.mlx_put_pixel(self.image, screen_x, screen_y, COLOR_EXIT)
 
+    # Draw walls and fill fully closed 42 cells.
 	def draw_maze(self) -> None:
 		for y in range(0, self.maze.height):
 			for x in range(0, self.maze.width):
 				self.maze.get_cell(x, y)
 				pixel_x = x * self.cell_size
 				pixel_y = y * self.cell_size
+
+                # If all four walls are closed (cell == 15), draw a filled block
+				cell = self.maze.get_cell(x, y)
+				if cell == 15:
+					for screen_x in range(pixel_x, pixel_x + self.cell_size):
+						for screen_y in range(pixel_y, pixel_y + self.cell_size):
+							mlx.mlx_put_pixel(self.image, screen_x, screen_y, COLOR_WALL)
+					continue
+
+                # Otherwise draw individual walls as before
 				if self.maze.has_wall(x, y, 0):
 					for screen_x in range(pixel_x, pixel_x + self.cell_size):
 						mlx.mlx_put_pixel(self.image, screen_x, pixel_y, COLOR_WALL)
@@ -76,6 +92,7 @@ class Graphics:
 					for screen_y in range(pixel_y, pixel_y + self.cell_size):
 						mlx.mlx_put_pixel(self.image, pixel_x, screen_y, COLOR_WALL)
 
+    # Build the final image and display it.
 	def render(self) -> None:
 		self.image = mlx.mlx_new_image(self.window, self.window_width, self.window_height)
 		self.draw_entry_exit_path()
