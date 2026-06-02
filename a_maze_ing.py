@@ -1,26 +1,12 @@
-from parse import parse
+from mazegen.parse import parse
 from mazegen.dfs import MazeGenerator
-from output import write_maze
-from bfs import bfs_short
-from graphics import Graphics
+from mazegen.output import write_maze
+from mazegen.bfs import bfs_short
+from mazegen.graphics import Graphics
 
 
 if __name__ == '__main__':
     maze_parse = parse()
-
-    #Had to change to get the path to not go over the 42 cells but commented your original code incase you're not okay with it
-    """# create random grid with random, walls
-    gen = MazeGenerator(
-        maze_parse["WIDTH"],
-        maze_parse["HEIGHT"],
-        maze_parse.get("SEED"))
-
-    # open up walls from the ENTRY
-    gen.generate(maze_parse["ENTRY"][0], maze_parse["ENTRY"][1])
-
-    # find path to connect the entry to the eit
-    test = bfs_short(gen.maz, (maze_parse["ENTRY"][0], maze_parse["ENTRY"][1]),
-        (maze_parse["EXIT"][0], maze_parse["EXIT"][1]))"""
 
     # Generate maze + draw 42 first, then run BFS.
     entry = (maze_parse["ENTRY"][0], maze_parse["ENTRY"][1])
@@ -35,6 +21,10 @@ if __name__ == '__main__':
             maze_parse.get("SEED")
         )
         gen.generate(entry[0], entry[1])
+
+        if maze_parse["PERFECT"] is False: #NOT FINISH
+            gen.make_imperfect()
+        
         # 3X3 walls
         gen.check_wall()
         #42

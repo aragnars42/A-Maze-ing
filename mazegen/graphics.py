@@ -5,7 +5,7 @@ import os, sys
 sys.path.insert(0, os.path.expanduser("~/MLX42/ffi/python"))
 from mlx import Mlx
 from typing import List, Tuple
-from mazegen.mazegen import Maze
+from .mazegen import Maze
 
 # Maze color selection
 COLOR_WALL = 0xD9ADD1FF

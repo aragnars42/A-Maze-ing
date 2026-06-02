@@ -1,5 +1,4 @@
 # Maze grid storage and wall bit operations.
-
 from typing import List
 
 # Stores the maze cells as hex and manages wall states.

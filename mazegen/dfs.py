@@ -1,4 +1,4 @@
-from mazegen.mazegen import Maze
+from .mazegen import Maze
 import random
 
 
@@ -50,6 +50,69 @@ class MazeGenerator:
             else:
                 self.stack.pop()
 
+    """def make_imperfect(self, openings: int = 100) -> None: #not finish
+        for _ in range(openings):
+            x = random.randint(0, self.maz.width - 1)
+            y = random.randint(0, self.maz.height - 1)
+
+            directions = [
+                {"dx": 0, "dy": -1, "dir": 0, "opp": 2},
+                {"dx": 1, "dy": 0, "dir": 1, "opp": 3},
+                {"dx": 0, "dy": 1, "dir": 2, "opp": 0},
+                {"dx": -1, "dy": 0, "dir": 3, "opp": 1},
+            ]
+
+            random.shuffle(directions)
+
+            for d in directions:
+                nx = x + d["dx"]
+                ny = y + d["dy"]
+
+            if not (
+                0 <= nx < self.maz.width
+                and 0 <= ny < self.maz.height):
+                continue
+
+            if self.maz.has_wall(x, y, d["dir"]):
+                self.maz.open_wall(x, y, d["dir"])
+                self.maz.open_wall(nx, ny, d["opp"])
+                break
+            elif random.random() > 0.5:"""
+
+    
+    """def make_imperfect(self, openings: int = 10) -> None:
+        directions = [
+                {"dx": 0, "dy": -1, "dir": 0, "opp": 2},
+                {"dx": 1, "dy": 0, "dir": 1, "opp": 3},
+                {"dx": 0, "dy": 1, "dir": 2, "opp": 0},
+                {"dx": -1, "dy": 0, "dir": 3, "opp": 1},
+            ]
+
+        attempts = 0
+        opened = 0
+        max_attempts = openings * 10 
+
+        while opened < openings and attempts < max_attempts:
+            attempts += 1
+
+            x = random.randint(0, self.maz.width - 1)
+            y = random.randint(0, self.maz.height - 1)
+
+            random.shuffle(directions)
+
+            for d in directions:
+                nx = x + d["dx"]
+                ny = y + d["dy"]
+
+                if not (0 <= nx < self.maz.width and 0 <= ny < self.maz.height):
+                    continue
+
+                if not self.maz.has_wall(x, y, d["dir"]):
+                    self.maz.open_wall(x, y, d["dir"])
+                    self.maz.open_wall(nx, ny, d["opp"])
+                opened += 1
+                break"""
+
     def draw(self):
         num_4 = [
             (1,0), (3,0),
@@ -66,7 +129,7 @@ class MazeGenerator:
             (1,4),(2,4),(3,4)
         ]
         center_w = self.maz.width // 2 - 5
-        center_h = self.maz.height // 2 - 5
+        center_h = self.maz.height // 2 - 2
     
         for dx, dy in num_4:
             x = center_w + dx

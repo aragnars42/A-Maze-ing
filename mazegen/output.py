@@ -1,5 +1,4 @@
 # Writes the maze grid, entry/exit, and path to the output file.
-
 from typing import List, Tuple
 
 # Save the maze as hex rows plus entry, exit, and shortest path.
