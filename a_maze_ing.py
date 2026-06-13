@@ -29,7 +29,7 @@ if __name__ == '__main__':
         gen.check_wall()
 
         # 42
-        gen.draw()
+        #gen.draw()
         test = bfs_short(gen.maz, entry, exit_pos)
 
     # Adding graphics to test
@@ -40,7 +40,7 @@ if __name__ == '__main__':
             gen = MazeGenerator(maze_parse["WIDTH"], maze_parse["HEIGHT"], maze_parse.get("SEED"))
             gen.generate(entry[0], entry[1])
             gen.check_wall()
-            gen.draw()
+            #gen.draw()
             result = bfs_short(gen.maz, entry, exit_pos)
         return gen.maz, result
 
