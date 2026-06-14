@@ -12,10 +12,10 @@ class MazeGenerator:
             random.seed(seed)
 
         self.directions = [
-            {"dx": 0,  "dy": -1, "direc": 0, "opposite": 2}, #up
-            {"dx": 0,  "dy": 1,  "direc": 2, "opposite": 0}, #down
-            {"dx": -1, "dy": 0,  "direc": 3, "opposite": 1}, #left (esquerda)
-		    {"dx": 1,  "dy": 0,  "direc": 1, "opposite": 3}, #right (direita)
+            {"dx": 0,  "dy": -1, "direc": 0, "opposite": 2},
+            {"dx": 0,  "dy": 1,  "direc": 2, "opposite": 0},
+            {"dx": -1, "dy": 0,  "direc": 3, "opposite": 1},
+            {"dx": 1,  "dy": 0,  "direc": 1, "opposite": 3},
         ]
 
     def get_neighbors(self, x, y, pattern: list) -> list:
@@ -33,18 +33,18 @@ class MazeGenerator:
 
     def generate(self, x: int, y: int) -> None:
         num_4 = [
-            (1,0), (3,0),
-            (1,1), (3,1),
-            (1,2), (2,2), (3,2),
-            (3,3),
-            (3,4)
+            (1, 0), (3, 0),
+            (1, 1), (3, 1),
+            (1, 2), (2, 2), (3, 2),
+            (3, 3),
+            (3, 4)
         ]
         num_2 = [
-            (1,0),(2,0),(3,0),
-            (3,1),
-            (1,2),(2,2),(3,2),
-            (1,3),
-            (1,4),(2,4),(3,4)
+            (1, 0), (2, 0), (3, 0),
+            (3, 1),
+            (1, 2), (2, 2), (3, 2),
+            (1, 3),
+            (1, 4), (2, 4), (3, 4)
         ]
         center_w = self.maz.width // 2 - 5
         center_h = self.maz.height // 2 - 2
@@ -71,7 +71,7 @@ class MazeGenerator:
             else:
                 self.stack.pop()
 
-    def get_neighbors_imperfect(self, x, y, pattern: list) -> list: 
+    def get_neighbors_imperfect(self, x, y, pattern: list) -> list:
         neighbors = []
 
         for d in self.directions:
@@ -80,24 +80,25 @@ class MazeGenerator:
 
             if 0 <= nx < self.maz.width and 0 <= ny < self.maz.height:
                 if (nx, ny) not in pattern:
-                    neighbors.append(d) #return directions
+                    neighbors.append(d)
+                    # return directions
 
         return neighbors
 
     def make_imperfect(self, openings: int = 100) -> None:
         num_4 = [
-            (1,0), (3,0),
-            (1,1), (3,1),
-            (1,2), (2,2), (3,2),
-            (3,3),
-            (3,4)
+            (1, 0), (3, 0),
+            (1, 1), (3, 1),
+            (1, 2), (2, 2), (3, 2),
+            (3, 3),
+            (3, 4)
         ]
         num_2 = [
-            (1,0),(2,0),(3,0),
-            (3,1),
-            (1,2),(2,2),(3,2),
-            (1,3),
-            (1,4),(2,4),(3,4)
+            (1, 0), (2, 0), (3, 0),
+            (3, 1),
+            (1, 2), (2, 2), (3, 2),
+            (1, 3),
+            (1, 4), (2, 4), (3, 4)
         ]
         center_w = self.maz.width // 2 - 5
         center_h = self.maz.height // 2 - 2
@@ -106,7 +107,7 @@ class MazeGenerator:
             pattern.append((coord[0] + center_w, coord[1] + center_h))
         for coord in num_2:
             pattern.append((coord[0] + center_w + 5, coord[1] + center_h))
-        
+
         for _ in range(openings):
             x, y = pattern[0]
             while (x, y) in pattern:
@@ -119,7 +120,9 @@ class MazeGenerator:
                 nx = x + d["dx"]
                 ny = y + d["dy"]
 
-                if not (0 <= nx < self.maz.width and 0 <= ny < self.maz.height):
+                if not (
+                        0 <= nx < self.maz.width and
+                        0 <= ny < self.maz.height):
                     continue
 
                 if self.maz.has_wall(x, y, d["direc"]):
@@ -127,51 +130,18 @@ class MazeGenerator:
                     self.maz.open_wall(nx, ny, d["opposite"])
                     break
 
-
-    """def draw(self):
-        num_4 = [
-            (1,0), (3,0),
-            (1,1), (3,1),
-            (1,2), (2,2), (3,2),
-            (3,3),
-            (3,4)
-        ]
-        num_2 = [
-            (1,0),(2,0),(3,0),
-            (3,1),
-            (1,2),(2,2),(3,2),
-            (1,3),
-            (1,4),(2,4),(3,4)
-        ]
-        center_w = self.maz.width // 2 - 5
-        center_h = self.maz.height // 2 - 2
-    
-        for dx, dy in num_4:
-            x = center_w + dx
-            y = center_h + dy
-            self.maz.close_wall(x, y, 0)
-            self.maz.close_wall(x, y, 1)
-            self.maz.close_wall(x, y, 2)
-            self.maz.close_wall(x, y, 3)
-
-        for xd, yd in num_2: 
-            xx = center_w + xd + 5
-            yy = center_h + yd
-            self.maz.close_wall(xx, yy, 0)
-            self.maz.close_wall(xx, yy, 1)
-            self.maz.close_wall(xx, yy, 2)
-            self.maz.close_wall(xx, yy, 3)"""
-
     def check_wall(self):
-        for x in range(self.maz.width - 2):        
+        for x in range(self.maz.width - 2):
             for y in range(self.maz.height - 2):
-                if (not self.maz.has_wall(x, y, 1) and not
-                self.maz.has_wall(x+1, y, 1) and not
-                self.maz.has_wall(x, y+1, 1) and not 
-                self.maz.has_wall(x+1, y+1, 1) and not
-                self.maz.has_wall(x, y, 2) and not
-                self.maz.has_wall(x+1, y, 2) and not
-                self.maz.has_wall(x, y+1, 2) and not 
-                self.maz.has_wall(x+1, y+1, 2)):
+                if (
+                    not self.maz.has_wall(x, y, 1) and not
+                    self.maz.has_wall(x+1, y, 1) and not
+                    self.maz.has_wall(x, y+1, 1) and not
+                    self.maz.has_wall(x+1, y+1, 1) and not
+                    self.maz.has_wall(x, y, 2) and not
+                    self.maz.has_wall(x+1, y, 2) and not
+                    self.maz.has_wall(x, y+1, 2) and not
+                    self.maz.has_wall(x+1, y+1, 2)
+                ):
                     self.maz.close_wall(x+1, y, 1)
                     self.maz.close_wall(x+2, y, 3)

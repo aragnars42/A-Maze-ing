@@ -7,10 +7,10 @@ def bfs_short(maze, start, end):
     p = {}
     p[start] = None
     directions = [
-            {"dx": 0,  "dy": -1, "direc": 0, "opposite": 2}, #up
-            {"dx": 0,  "dy": 1,  "direc": 2, "opposite": 0}, #down
-            {"dx": -1, "dy": 0,  "direc": 3, "opposite": 1}, #left (esquerda)
-            {"dx": 1,  "dy": 0,  "direc": 1, "opposite": 3}, #right (direita)
+            {"dx": 0,  "dy": -1, "direc": 0, "opposite": 2},
+            {"dx": 0,  "dy": 1,  "direc": 2, "opposite": 0},
+            {"dx": -1, "dy": 0,  "direc": 3, "opposite": 1},
+            {"dx": 1,  "dy": 0,  "direc": 1, "opposite": 3},
         ]
     while queue:
         node = queue.popleft()
