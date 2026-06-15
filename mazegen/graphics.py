@@ -254,5 +254,7 @@ class Graphics:
         self.draw_entry_exit()
         self.draw_maze()
         self.draw_hint()
+        self.mlx.mlx_hook(self.window, 33, 0,
+                          self.mlx.mlx_loop_exit, self.mlx_ptr)
         self.mlx.mlx_key_hook(self.window, self.key_code, self)
         self.mlx.mlx_loop(self.mlx_ptr)
