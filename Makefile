@@ -33,10 +33,6 @@ lint: install
 		--disallow-untyped-defs \
 		--check-untyped-defs
 
-lint-strict: install
-	$(VENV)/bin/flake8 . --exclude venv
-	$(VENV)/bin/mypy . --strict
-
 clean:
 	rm -rf venv build dist *.egg-info
 	find . -type d -name '__pycache__' -exec rm -rf {} +

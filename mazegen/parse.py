@@ -15,17 +15,16 @@ def parse() -> dict[str, Any]:
     """
         Parse ensures that my config.txt is error-free.
 
-        I perform several checks, I see if my file exists, 
+        I perform several checks, I see if my file exists,
         and if I passed an argument, I check if
         the parameters I pass within the config are correct.
 
 
         Returns:
-        dict of strings or can be Any 
+        dict of strings or can be Any
         (either str, int, or float)
 
     """
-
     if len(sys.argv) < 2:
         print("ERROR - No argument")
         sys.exit(1)
@@ -62,6 +61,7 @@ def parse() -> dict[str, Any]:
 
     for key in REQUIRED_KEYS:
         if key not in config:
+            print("ERROR - Missing flag")
             sys.exit(1)
 
     config["ENTRY"] = config["ENTRY"].split(",")
@@ -97,13 +97,13 @@ def parse() -> dict[str, Any]:
         config["ENTRY"][0] >= config["WIDTH"]
         or config["ENTRY"][1] >= config["HEIGHT"]
     ):
-        print("ERROR - Entry must be less than width")
+        print("ERROR - Maze entry is out of bounds")
         sys.exit(1)
     if (
         config["EXIT"][0] >= config["WIDTH"]
         or config["EXIT"][1] >= config["HEIGHT"]
     ):
-        print("ERROR - Exit must be less than height")
+        print("ERROR - Maze exit is out of bounds")
         sys.exit(1)
 
     if config["ENTRY"][0] < 0 or config["ENTRY"][1] < 0:

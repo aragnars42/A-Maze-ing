@@ -10,7 +10,7 @@ def write_maze(
     path: str
 ) -> None:
     """Save the maze as hex rows plus entry, exit, and shortest path.
- 
+
     Args:
         filename: Path to the output file.
         maze_grid: 2D list of cell wall values.

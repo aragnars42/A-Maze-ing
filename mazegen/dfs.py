@@ -4,15 +4,15 @@ import random
 
 
 class MazeGenerator:
-    """ Maze genaretor 
-    
+    """ Maze genaretor
+
     Atributes:
         Visit: saves already visited cells (to avoid repetition)
         stack: Use it to generate the maze with dfs
         maz: the object of the labyrinth itself
-        seed: Define predictable randomness 
+        seed: Define predictable randomness
         (same maze if the seed is repeated).
-        directions: 
+        directions:
             North - top (-1, 0) Y,X
             South - down (1, 0) Y,X
             West - left (0, -1) Y,X
@@ -24,20 +24,21 @@ class MazeGenerator:
 
         descrever
         Each direction is represented as:
-        a dict: 
+        a dict:
             dx, dy is displacement:
             North - top (-1, 0) Y,X
             South - down (1, 0) Y,X
             West - left (0, -1) Y,X
             East - right (0, 1) Y,X
             direc: Index of the wall that needs to be removed.
-            opposite: opposite wall (used when "making way" 
+            opposite: opposite wall (used when "making way"
             between cells)
 
         Args:
             width (int): maze width
             height (int): maze height
-            seed (Any|None): Define predictable randomness (same maze if the seed is repeated).
+            seed (Any|None): Define predictable randomness
+            (same maze if the seed is repeated).
         """
         self.visit: set[tuple[int, int]] = set()
         self.stack: list[tuple[int, int]] = []
@@ -60,14 +61,14 @@ class MazeGenerator:
         pattern: list[tuple[int, int]]
     ) -> list[tuple[int, int, dict[str, int]]]:
         """
-        Returns all valid neighboring 
+        Returns all valid neighboring
         cells of a given position in the maze.
 
         A neighbor is considered valid if:
             It is within the maze boundaries.
             It has not been visited yet.
             It is not present in the given exclusion pattern.
-        Each returned neighbor includes its 
+        Each returned neighbor includes its
         coordinate and the direction
         metadata used to move from the current cell
         to that neighbor.
@@ -75,7 +76,8 @@ class MazeGenerator:
         Args:
             x (int): Current x-coordinate.
             y (int): Current y-coordinate.
-            pattern (list[tuple[int, int]]): List of coordinates to exclude for 42
+            pattern (list[tuple[int, int]]):
+            List of coordinates to exclude for 42
 
         Returns:
             list[tuple[int, int, dict[str, int]]]:
@@ -98,7 +100,7 @@ class MazeGenerator:
         """
         Generate my labyrinth, my perfect one.
 
-        first step list of tuples that I have the 42 
+        first step list of tuples that I have the 42
         and already closed and centralized, then go as deep as
         possible and back again when there are no more options.
         self.stack.append((x, y) = start point
@@ -137,10 +139,8 @@ class MazeGenerator:
 
         self.stack.append((x, y))
 
-
         while self.stack:
             x, y = self.stack[-1]
-
             neighbors: list[
                 tuple[
                     int,
@@ -161,7 +161,7 @@ class MazeGenerator:
                 self.stack.append((nx, ny))
             else:
                 self.stack.pop()
-                #back t.t
+                # back t.t
 
     def get_neighbors_imperfect(
         self,
@@ -175,10 +175,10 @@ class MazeGenerator:
         and are not in the pattern
 
         Unlike "get_neighbors", which only allows me to access new cells,
-        here I can go back to older cells if that helps. 
+        here I can go back to older cells if that helps.
         The 'get_neighbors_imperfect'
-        method allows you to revisit cells, creating 
-        loops in the maze, while the 'normal' method prevents 
+        method allows you to revisit cells, creating
+        loops in the maze, while the 'normal' method prevents
         this to maintain a loop-free maze.
         x, y = where you are
         dx, dy = where you want to go
@@ -198,7 +198,7 @@ class MazeGenerator:
                 direc -> which wall to open
                 opposite -> neighbor's wall (to connect the two sides)
                 It does NOT return coordinates directly."""
-                
+
         neighbors: list[dict[str, int]] = []
 
         for d in self.directions:
@@ -211,21 +211,22 @@ class MazeGenerator:
 
         return neighbors
 
-    def make_imperfect(self, openings: int = 100) -> None:
+    def make_imperfect(self, openings: int = 200) -> None:
         """
         Generate my labyrinth, my imperfect one.
 
-        first step list of tuples that I have the 42 
-        and already closed and centralized. It transforms 
+
+        First step list of tuples that I have the 42
+        and already closed and centralized. It transforms
         a perfect maze into an "imperfect" maze
-        (with loops) by opening random walls. 
+        (with loops) by opening random walls.
         The labyrinth already exists (perfect)
-        Then it "breaks walls" Creates shortcuts and 
+        Then it "breaks walls" Creates shortcuts and
         loops after generation.
         x, y = where you are
         dx, dy = where you want to go
         nx, ny = where you will end up
- 
+
         Args:
             opening (int) There are 100 tentative
             tents in the walls without labour
@@ -274,31 +275,11 @@ class MazeGenerator:
                         0 <= ny < self.maz.height):
                     continue
 
-                if self.maz.has_wall(x, y, d["direc"]):
+                if (
+                    self.maz.has_wall(x, y, d["direc"]) and
+                    self.maz.cells[y][x] not in (1, 2, 4, 8) and
+                    self.maz.cells[ny][nx] not in (1, 2, 4, 8)
+                ):
                     self.maz.open_wall(x, y, d["direc"])
                     self.maz.open_wall(nx, ny, d["opposite"])
                     break
-
-    def check_wall(self) -> None:
-        """
-        check 2x2
-
-        This function traverses the maze in 2x2
-        blocks and closes walls when it
-        encounters areas that are too open, in order
-        to improve the maze's structure.
-        """
-        for x in range(self.maz.width - 2):
-            for y in range(self.maz.height - 2):
-                if (
-                    not self.maz.has_wall(x, y, 1) and not
-                    self.maz.has_wall(x+1, y, 1) and not
-                    self.maz.has_wall(x, y+1, 1) and not
-                    self.maz.has_wall(x+1, y+1, 1) and not
-                    self.maz.has_wall(x, y, 2) and not
-                    self.maz.has_wall(x+1, y, 2) and not
-                    self.maz.has_wall(x, y+1, 2) and not
-                    self.maz.has_wall(x+1, y+1, 2)
-                ):
-                    self.maz.close_wall(x+1, y, 1)
-                    self.maz.close_wall(x+2, y, 3)

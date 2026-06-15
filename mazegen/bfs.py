@@ -12,23 +12,25 @@ def bfs_short(
         Finds the shortest path between two points in a maze using BFS.
 
         We use BFS (Breadth-First Search) to find the shortest path,
-        creating two variables: start: entry 
-        and end: exit, which iterate through and create a list with 
-        this shortest path. BFS finds the shortest path because it 
+        creating two variables: start: entry
+        and end: exit, which iterate through and create a list with
+        this shortest path. BFS finds the shortest path because it
         explores all paths in ascending order of distance from the start.
 
         Each direction is represented as:
-            'N' (north / up) 
+            'N' (north / up)
             'S' (south / down)
             'E' (east / right)
             'W' (west / left)
 
         Args:
-            maze (Maze): The maze object that provides dimensions and wall checks.
+            maze (Maze): The maze object that provides
+            dimensions and wall checks.
             start (tuple[int, int]): The starting coordinate (x, y).
-            end (Optional[tuple[int, int]]): The target coordinate (x, y). Can be None.
+            end (Optional[tuple[int, int]]):
+            The target coordinate (x, y). Can be None.
 
-        Returns: 
+        Returns:
             Optional[str]:
                 A string containing the sequence of moves from start to end.
                 Returns None if no path exists to the destination.

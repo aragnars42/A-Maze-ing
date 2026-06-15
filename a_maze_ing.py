@@ -26,13 +26,12 @@ if __name__ == '__main__':
         gen.generate(entry[0], entry[1])
         if maze_parse["PERFECT"] is False:
             gen.make_imperfect()
-        # 3X3 walls
-        gen.check_wall()
         test = bfs_short(gen.maz, entry, exit_pos)
 
     # Adding graphics to test
     # Function to regenerate maze when pressing Key1
     def regen() -> tuple[Maze, str]:
+        """ """
         result: Opt[str] = None
         while result is None:
             gen: MazeGenerator = MazeGenerator(
@@ -41,7 +40,8 @@ if __name__ == '__main__':
                 maze_parse.get("SEED")
             )
             gen.generate(entry[0], entry[1])
-            gen.check_wall()
+            if maze_parse['PERFECT'] is False:
+                gen.make_imperfect()
             result = bfs_short(gen.maz, entry, exit_pos)
         return gen.maz, result
 

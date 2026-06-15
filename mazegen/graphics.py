@@ -1,5 +1,5 @@
 # Draws the maze, the 42, and the path using MLX42.
-from mlx import Mlx  # type: ignore[import-untyped]
+from mlx import Mlx
 from typing import Any, Optional as Opt
 from collections.abc import Callable
 from .mazegen import Maze
@@ -34,7 +34,7 @@ class KEY_CODES:
 
 class Graphics:
     """Handles MLX window creation and maze rendering.
- 
+
     Args:
         maze: The maze object to display.
         entry: Entry cell coordinates (x, y).
@@ -214,7 +214,7 @@ class Graphics:
 
     def key_code(self, keycode: int, _: Any) -> None:
         """Handle key press events from the MLX key hook.
- 
+
         Args:
             keycode: The X11 keysym code of the pressed key.
             _: Unused param passed by mlx_key_hook.
