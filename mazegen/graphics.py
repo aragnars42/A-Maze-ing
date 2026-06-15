@@ -12,10 +12,10 @@ COLOR_PATH: int = 0xFFD699FF
 
 # Color palettes for key 3 cycling — each is (wall, entry, exit, path)
 COLOR_P: list[tuple[int, int, int, int]] = [
-    (0xD9ADD1FF, 0xD896CFFF, 0xCBCADCFF, 0xFFD699FF),  # original pink/purple
-    (0x2A5298FF, 0x1E90FFFF, 0x00CED1FF, 0x87CEEBFF),  # blue ocean
-    (0x2D6A4FFF, 0x52B788FF, 0x95D5B2FF, 0xD8F3DCFF),  # forest green
-    (0xE76F51FF, 0xF4A261FF, 0xE9C46AFF, 0x264653FF),   # sunset orange
+    (0xFFD9ADD1, 0xFFD896CF, 0xFFCBCADC, 0xFFFFD699),  # original pink/purple
+    (0xFF2A5298, 0xFF1E90FF, 0xFF00CED1, 0xFF87CEEB),  # blue ocean
+    (0xFF2D6A4F, 0xFF52B788, 0xFF95D5B2, 0xFFD8F3DC),  # forest green
+    (0xFFE76F51, 0xFFF4A261, 0xFFE9C46A, 0xFFD4847A),   # sunset orange
 ]
 
 
