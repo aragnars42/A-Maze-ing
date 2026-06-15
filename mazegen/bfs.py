@@ -8,20 +8,30 @@ def bfs_short(
     start: tuple[int, int],
     end: Opt[tuple[int, int]]
 ) -> Opt[str]:
-    """Example function with types documented in the docstring.
+    """
+        Finds the shortest path between two points in a maze using BFS.
 
-    `PEP 484`_ type annotations are supported. If attribute, parameter, and
-    return types are annotated according to `PEP 484`_, they do not need to be
-    included in the docstring:
+        We use BFS (Breadth-First Search) to find the shortest path,
+        creating two variables: start: entry 
+        and end: exit, which iterate through and create a list with 
+        this shortest path. BFS finds the shortest path because it 
+        explores all paths in ascending order of distance from the start.
 
-    Args:
-        param1 (int): The first parameter.
-        param2 (str): The second parameter.
+        Each direction is represented as:
+            'N' (north / up) 
+            'S' (south / down)
+            'E' (east / right)
+            'W' (west / left)
 
-    Returns:
-        bool: The return value. True for success, False otherwise.
+        Args:
+            maze (Maze): The maze object that provides dimensions and wall checks.
+            start (tuple[int, int]): The starting coordinate (x, y).
+            end (Optional[tuple[int, int]]): The target coordinate (x, y). Can be None.
 
-    
+        Returns: 
+            Optional[str]:
+                A string containing the sequence of moves from start to end.
+                Returns None if no path exists to the destination.
     """
     queue: deque[tuple[int, int]] = deque([start])
     visited: set[tuple[int, int]] = set([start])

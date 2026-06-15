@@ -4,13 +4,13 @@
 
 # A-Maze-ing
 
-A Python-based maze generation and visualization system using Depth-First Search (DFS) algorithm, with graphical rendering, shortest-path finding, and the iconic 42 logo displayed at the center of every maze.
+A Python-based maze generation and visualization system using Depth-First Search (DFS) algorithm for maze generation, with graphical rendering, shortest-path finding, and the iconic 42 logo displayed at the center of every maze.
 
 ---
 
 ## Description
 
-A-Maze-ing is a maze generation program that creates random rectangular mazes and displays them graphically using MLX42. The program generates a perfect maze using DFS, identifies the shortest path from entry to exit using BFS, and renders the result with color-coded visualization (entry, exit, path, and walls). A signature 42 logo is drawn at the center of each generated maze.
+A-Maze-ing is a maze generation program that creates random rectangular mazes and displays them graphically using MLX42. The program generates a perfect (or imperfect) maze using DFS, identifies the shortest path from entry to exit using BFS, and renders the result with color-coded visualization (entry, exit, path, and walls). A signature 42 logo is drawn at the center of each generated maze.
 
 ---
 
@@ -27,7 +27,7 @@ A-Maze-ing is a maze generation program that creates random rectangular mazes an
 
 **1. Clone the repository:**
 ```bash
-git clone <your-repo-url>
+git clone <repo-url>
 cd A-Maze-ing
 ```
 
@@ -105,12 +105,12 @@ PERFECT=False
 
 ### Validation
 
-The parser validates:
-- All required keys are present
-- Width and height are positive
-- Entry and exit are within bounds
-- Entry and exit are not the same position
-- Coordinates are valid integers
+Syntax rules:
+- All required keys need to be present
+- Width and height should be positive
+- Entry and exit should be within bounds
+- Entry and exit should not be the same position
+- Coordinates should be valid integers
 
 ---
 
@@ -118,21 +118,15 @@ The parser validates:
 
 ### Depth-First Search (DFS)
 
-**What we chose:** Depth-First Search (DFS) with recursive backtracking.
+**What we chose:** Depth-First Search (DFS) is a search algorithm that starts at a specific node and explores as much as possible along all the nodes before (neighbors) backtracking when there are no more moves available.
 
-**Why DFS:**
-- **Simple implementation:** Uses a stack-based approach that is intuitive and easy to debug.
-- **Perfect mazes:** Generates mazes with guaranteed single solution (no loops).
-- **Aesthetically pleasing:** Produces long, winding corridors characteristic of traditional mazes.
-- **Efficient:** Fast generation even for large maze dimensions.
-
-**Algorithm overview:**
+**Algorithm :**
 1. Start at entry position and mark as visited.
 2. Randomly choose an unvisited neighbor.
 3. Open the wall between current cell and neighbor.
-4. Recursively move to the neighbor.
+4. Move to the neighbor.
 5. If no unvisited neighbors exist, backtrack.
-6. Repeat until all cells are visited.
+6. Repeat until there is nowhere to backtrack to (maze entry).
 
 ---
 
@@ -140,7 +134,9 @@ The parser validates:
 
 **Algorithm:** Breadth-First Search (BFS)
 
-Finds the shortest path from entry to exit after maze generation. The path is represented as a string of directions: `N` (north), `S` (south), `E` (east), `W` (west).
+We use BFS (Breadth-First Search) to find the shortest path, creating two variables: `start: entry` and `end: exit`, which iterate through and create a list with this shortest path.
+BFS finds the shortest path because it explores all paths in ascending order of distance from the start.
+
 
 ---
 
@@ -193,8 +189,8 @@ Prevents large 2×2 empty regions (considered invalid in maze design) by:
 
 | Member | Login | Role |
 |--------|-------|------|
-| Thaynara Montezuma | tmontezu | Parser, path finding (BFS), graphics rendering |
-| Andrea Nordquist Ragnarsdottir | aragnars | Maze generation (DFS), logo integration, debugging |
+| Thaynara Montezuma | tmontezu | Parser, path finding (BFS), Maze generation (DFS) 
+| Andrea Nordquist Ragnarsdottir | aragnars | logo integration, debugging, graphics rendering |
 
 ### Planning and Evolution
 
@@ -218,7 +214,7 @@ Prevents large 2×2 empty regions (considered invalid in maze design) by:
 - **DFS + BFS combination** is efficient and produces high-quality mazes.
 - **Modular `mazegen` package** makes components reusable in other projects.
 
-### Areas for Improvement
+### areas for Improvement
 
 - **Performance:** Could optimize rendering with batching instead of per-pixel updates.
 - **Algorithm choice:** Could add Prim's algorithm as an option for stylistically different mazes.

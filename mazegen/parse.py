@@ -12,7 +12,19 @@ REQUIRED_KEYS: list[str] = [
 
 
 def parse() -> dict[str, Any]:
-    """Doscstring"""
+    """
+        Parse ensures that my config.txt is error-free.
+
+        I perform several checks, I see if my file exists, 
+        and if I passed an argument, I check if
+        the parameters I pass within the config are correct.
+
+
+        Returns:
+        dict of strings or can be Any 
+        (either str, int, or float)
+
+    """
 
     if len(sys.argv) < 2:
         print("ERROR - No argument")
