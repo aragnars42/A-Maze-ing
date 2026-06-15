@@ -22,9 +22,13 @@ COLOR_P: list[tuple[int, int, int, int]] = [
 class KEY_CODES:
     KEY_ESC: int = 65307
     KEY_1: int = 65436
+    NUM_1: int = 49
     KEY_2: int = 65433
+    NUM_2: int = 50
     KEY_3: int = 65435
-    KEY_4: int = 65430
+    NUM_3: int = 51
+    KEY_4: int = 65430 | 52
+    NUM_4: int = 52
 
 
 # Handles window creation and maze rendering.
@@ -198,7 +202,7 @@ class Graphics:
     # Build the final image and display it.
     def key_code(self, keycode: int, _: Any) -> None:
         match keycode:
-            case KEY_CODES.KEY_1:
+            case KEY_CODES.KEY_1 | KEY_CODES.NUM_1:
                 if self.regen_callback is not None:
                     self.maze, self.path = self.regen_callback()
                 self.mlx.mlx_clear_window(self.mlx_ptr, self.window)
@@ -207,7 +211,7 @@ class Graphics:
                     self.draw_path()
                 self.draw_entry_exit()
                 self.draw_hint()
-            case KEY_CODES.KEY_2:
+            case KEY_CODES.KEY_2 | KEY_CODES.NUM_2:
                 self.path_visible = not self.path_visible
                 self.mlx.mlx_clear_window(self.mlx_ptr, self.window)
                 self.draw_maze()
@@ -215,7 +219,7 @@ class Graphics:
                     self.draw_path()
                 self.draw_entry_exit()
                 self.draw_hint()
-            case KEY_CODES.KEY_3:
+            case KEY_CODES.KEY_3 | KEY_CODES.NUM_3:
                 self.color_idx = (self.color_idx + 1) % len(COLOR_P)
                 self.mlx.mlx_clear_window(self.mlx_ptr, self.window)
                 self.draw_maze()
@@ -223,7 +227,7 @@ class Graphics:
                     self.draw_path()
                 self.draw_entry_exit()
                 self.draw_hint()
-            case KEY_CODES.KEY_4 | KEY_CODES.KEY_ESC:
+            case KEY_CODES.KEY_4 | KEY_CODES.NUM_4 | KEY_CODES.KEY_ESC:
                 self.mlx.mlx_loop_exit(self.mlx_ptr)
 
     def render(self) -> None:
