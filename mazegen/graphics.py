@@ -206,34 +206,34 @@ class Graphics:
                 if self.regen_callback is not None:
                     self.maze, self.path = self.regen_callback()
                 self.mlx.mlx_clear_window(self.mlx_ptr, self.window)
-                self.draw_maze()
                 if self.path_visible:
                     self.draw_path()
                 self.draw_entry_exit()
+                self.draw_maze()
                 self.draw_hint()
             case KEY_CODES.KEY_2 | KEY_CODES.NUM_2:
                 self.path_visible = not self.path_visible
                 self.mlx.mlx_clear_window(self.mlx_ptr, self.window)
-                self.draw_maze()
                 if self.path_visible:
                     self.draw_path()
                 self.draw_entry_exit()
+                self.draw_maze()
                 self.draw_hint()
             case KEY_CODES.KEY_3 | KEY_CODES.NUM_3:
                 self.color_idx = (self.color_idx + 1) % len(COLOR_P)
                 self.mlx.mlx_clear_window(self.mlx_ptr, self.window)
-                self.draw_maze()
                 if self.path_visible:
                     self.draw_path()
                 self.draw_entry_exit()
+                self.draw_maze()
                 self.draw_hint()
             case KEY_CODES.KEY_4 | KEY_CODES.NUM_4 | KEY_CODES.KEY_ESC:
                 self.mlx.mlx_loop_exit(self.mlx_ptr)
 
     def render(self) -> None:
-        self.draw_maze()
         self.draw_path()
         self.draw_entry_exit()
+        self.draw_maze()
         self.draw_hint()
         self.mlx.mlx_key_hook(self.window, self.key_code, self)
         self.mlx.mlx_loop(self.mlx_ptr)
