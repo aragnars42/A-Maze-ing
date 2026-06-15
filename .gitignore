@@ -1,3 +1,7 @@
-.venv
+.venv/
 mlx-2.2-py3-none-any.whl
-config.txt
+__pycache__/
+.mypy_cache/
+*.txt
+!config.txt
+!requirements.txt

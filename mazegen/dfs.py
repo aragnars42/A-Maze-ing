@@ -1,29 +1,35 @@
 from .mazegen import Maze
+from typing import Any
 import random
 
 
 class MazeGenerator:
-    def __init__(self, width: int, height: int, seed: int) -> None:
-        self.visit = set()
-        self.stack = []
-        self.maz = Maze(width, height)
+    def __init__(self, width: int, height: int, seed: Any | None) -> None:
+        self.visit: set[tuple[int, int]] = set()
+        self.stack: list[tuple[int, int]] = []
+        self.maz: Maze = Maze(width, height)
 
         if seed is not None:
             random.seed(seed)
 
-        self.directions = [
+        self.directions: list[dict[str, int]] = [
             {"dx": 0,  "dy": -1, "direc": 0, "opposite": 2},
             {"dx": 0,  "dy": 1,  "direc": 2, "opposite": 0},
             {"dx": -1, "dy": 0,  "direc": 3, "opposite": 1},
             {"dx": 1,  "dy": 0,  "direc": 1, "opposite": 3},
         ]
 
-    def get_neighbors(self, x, y, pattern: list) -> list:
-        neighbors = []
+    def get_neighbors(
+        self,
+        x: int,
+        y: int,
+        pattern: list[tuple[int, int]]
+    ) -> list[tuple[int, int, dict[str, int]]]:
+        neighbors: list[tuple[int, int, dict[str, int]]] = []
 
         for d in self.directions:
-            nx = x + d["dx"]
-            ny = y + d["dy"]
+            nx: int = x + d["dx"]
+            ny: int = y + d["dy"]
 
             if 0 <= nx < self.maz.width and 0 <= ny < self.maz.height:
                 if (nx, ny) not in self.visit and (nx, ny) not in pattern:
@@ -32,23 +38,23 @@ class MazeGenerator:
         return neighbors
 
     def generate(self, x: int, y: int) -> None:
-        num_4 = [
+        num_4: list[tuple[int, int]] = [
             (1, 0), (3, 0),
             (1, 1), (3, 1),
             (1, 2), (2, 2), (3, 2),
             (3, 3),
             (3, 4)
         ]
-        num_2 = [
+        num_2: list[tuple[int, int]] = [
             (1, 0), (2, 0), (3, 0),
             (3, 1),
             (1, 2), (2, 2), (3, 2),
             (1, 3),
             (1, 4), (2, 4), (3, 4)
         ]
-        center_w = self.maz.width // 2 - 5
-        center_h = self.maz.height // 2 - 2
-        pattern = []
+        center_w: int = self.maz.width // 2 - 5
+        center_h: int = self.maz.height // 2 - 2
+        pattern: list[tuple[int, int]] = []
         for coord in num_4:
             pattern.append((coord[0] + center_w, coord[1] + center_h))
         for coord in num_2:
@@ -59,7 +65,16 @@ class MazeGenerator:
         while self.stack:
             x, y = self.stack[-1]
 
-            neighbors = self.get_neighbors(x, y, pattern)
+            neighbors: list[
+                tuple[
+                    int,
+                    int,
+                    dict[
+                        str,
+                        int
+                    ]
+                ]
+            ] = self.get_neighbors(x, y, pattern)
 
             if neighbors:
                 nx, ny, d = random.choice(neighbors)
@@ -71,38 +86,42 @@ class MazeGenerator:
             else:
                 self.stack.pop()
 
-    def get_neighbors_imperfect(self, x, y, pattern: list) -> list:
-        neighbors = []
+    def get_neighbors_imperfect(
+        self,
+        x: int,
+        y: int,
+        pattern: list[tuple[int, int]]
+    ) -> list[dict[str, int]]:
+        neighbors: list[dict[str, int]] = []
 
         for d in self.directions:
-            nx = x + d["dx"]
-            ny = y + d["dy"]
+            nx: int = x + d["dx"]
+            ny: int = y + d["dy"]
 
             if 0 <= nx < self.maz.width and 0 <= ny < self.maz.height:
                 if (nx, ny) not in pattern:
                     neighbors.append(d)
-                    # return directions
 
         return neighbors
 
     def make_imperfect(self, openings: int = 100) -> None:
-        num_4 = [
+        num_4: list[tuple[int, int]] = [
             (1, 0), (3, 0),
             (1, 1), (3, 1),
             (1, 2), (2, 2), (3, 2),
             (3, 3),
             (3, 4)
         ]
-        num_2 = [
+        num_2: list[tuple[int, int]] = [
             (1, 0), (2, 0), (3, 0),
             (3, 1),
             (1, 2), (2, 2), (3, 2),
             (1, 3),
             (1, 4), (2, 4), (3, 4)
         ]
-        center_w = self.maz.width // 2 - 5
-        center_h = self.maz.height // 2 - 2
-        pattern = []
+        center_w: int = self.maz.width // 2 - 5
+        center_h: int = self.maz.height // 2 - 2
+        pattern: list[tuple[int, int]] = []
         for coord in num_4:
             pattern.append((coord[0] + center_w, coord[1] + center_h))
         for coord in num_2:
@@ -114,11 +133,15 @@ class MazeGenerator:
                 x = random.randint(0, self.maz.width - 1)
                 y = random.randint(0, self.maz.height - 1)
 
-            directions = self.get_neighbors_imperfect(x, y, pattern)
+            directions: list[dict[str, int]] = self.get_neighbors_imperfect(
+                x,
+                y,
+                pattern
+            )
             random.shuffle(directions)
             for d in directions:
-                nx = x + d["dx"]
-                ny = y + d["dy"]
+                nx: int = x + d["dx"]
+                ny: int = y + d["dy"]
 
                 if not (
                         0 <= nx < self.maz.width and
@@ -130,7 +153,7 @@ class MazeGenerator:
                     self.maz.open_wall(nx, ny, d["opposite"])
                     break
 
-    def check_wall(self):
+    def check_wall(self) -> None:
         for x in range(self.maz.width - 2):
             for y in range(self.maz.height - 2):
                 if (

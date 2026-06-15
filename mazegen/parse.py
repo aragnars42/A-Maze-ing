@@ -1,22 +1,32 @@
 import sys
+from typing import Any
 
-REQUIRED_KEYS = ["WIDTH", "HEIGHT", "ENTRY", "EXIT", "OUTPUT_FILE", "PERFECT"]
+REQUIRED_KEYS: list[str] = [
+    "WIDTH",
+    "HEIGHT",
+    "ENTRY",
+    "EXIT",
+    "OUTPUT_FILE",
+    "PERFECT"
+]
 
 
-def parse():
+def parse() -> dict[str, Any]:
+    """Doscstring"""
+
     if len(sys.argv) < 2:
         print("ERROR - No argument")
         sys.exit(1)
 
-    name_fiche = sys.argv[1]
+    name_fiche: str = sys.argv[1]
     try:
         with open(name_fiche, encoding="utf-8") as f:
-            content = f.readlines()
+            content: list[str] = f.readlines()
     except FileNotFoundError:
         print(f"ERROR - {name_fiche} Not found")
         sys.exit(1)
 
-    config = {}
+    config: dict[str, Any] = {}
 
     for i, line in enumerate(content, 1):
         line = line.strip()
@@ -29,7 +39,7 @@ def parse():
             sys.exit(1)
 
         key, value = line.split("=", 1)
-        key = key.strip()
+        key = key.strip().upper()
         value = value.strip()
 
         if not key or not value:
@@ -91,10 +101,10 @@ def parse():
         print("ERROR - Exit cant be negative")
         sys.exit(1)
 
-    entry = (config["ENTRY"][0], config["ENTRY"][1])
-    exitt = (config["EXIT"][0], config["EXIT"][1])
+    entry: tuple[int, int] = (config["ENTRY"][0], config["ENTRY"][1])
+    exit: tuple[int, int] = (config["EXIT"][0], config["EXIT"][1])
 
-    if entry == exitt:
+    if entry == exit:
         print("ERROR- Entry and Exit cant be same")
         sys.exit(1)
 

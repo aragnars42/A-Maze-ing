@@ -2,7 +2,7 @@
 name = "mazegen"
 version = "0.1.0"
 description = "Maz eproject python"
-authors = [{name = "Thaynara Montezuma tmontezu", email = "tmontezu@student.42lisboa.com"}] [{name = "Andrea Nordquist Ragnarsdottir", email = "aragnars@student.42lisboa.com"}]
+authors = [{name = "Thaynara Montezuma tmontezu", email = "tmontezu@student.42lisboa.com"}, {name = "Andrea Nordquist Ragnarsdottir", email = "aragnars@student.42lisboa.com"}]
 requires-python = ">=3.10"
 
 

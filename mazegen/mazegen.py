@@ -6,8 +6,8 @@ from typing import List
 class Maze:
     # Start with every cell closed (value 15).
     def __init__(self, width: int, height: int) -> None:
-        self.width = width
-        self.height = height
+        self.width: int = width
+        self.height: int = height
         self.cells: List[List[int]] = [
             [15 for _ in range(width)] for _ in range(height)
         ]

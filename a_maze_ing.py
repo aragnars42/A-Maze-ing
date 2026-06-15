@@ -1,3 +1,5 @@
+from typing import Any, Optional as Opt
+from mazegen.mazegen import Maze
 from mazegen.parse import parse
 from mazegen.dfs import MazeGenerator
 from mazegen.output import write_maze
@@ -6,15 +8,15 @@ from mazegen.graphics import Graphics
 
 
 if __name__ == '__main__':
-    maze_parse = parse()
+    maze_parse: dict[str, Any] = parse()
 
     # Generate maze + draw 42 first, then run BFS.
-    entry = (maze_parse["ENTRY"][0], maze_parse["ENTRY"][1])
-    exit_pos = (maze_parse["EXIT"][0], maze_parse["EXIT"][1])
+    entry: tuple[int, int] = (maze_parse["ENTRY"][0], maze_parse["ENTRY"][1])
+    exit_pos: tuple[int, int] = (maze_parse["EXIT"][0], maze_parse["EXIT"][1])
 
     # If BFS returns None, regenerate until it finds a
     # valid path so it doesn't go over the logo
-    test = None
+    test: Opt[str] = None
     while test is None:
         gen = MazeGenerator(
             maze_parse["WIDTH"],
@@ -30,10 +32,10 @@ if __name__ == '__main__':
 
     # Adding graphics to test
     # Function to regenerate maze when pressing Key1
-    def regen():
-        result = None
+    def regen() -> tuple[Maze, str]:
+        result: Opt[str] = None
         while result is None:
-            gen = MazeGenerator(
+            gen: MazeGenerator = MazeGenerator(
                 maze_parse["WIDTH"],
                 maze_parse["HEIGHT"],
                 maze_parse.get("SEED")
@@ -43,7 +45,7 @@ if __name__ == '__main__':
             result = bfs_short(gen.maz, entry, exit_pos)
         return gen.maz, result
 
-    gfx = Graphics(
+    gfx: Graphics = Graphics(
         gen.maz,
         (maze_parse["ENTRY"][0], maze_parse["ENTRY"][1]),
         (maze_parse["EXIT"][0], maze_parse["EXIT"][1]),

@@ -4,14 +4,16 @@ from typing import List, Tuple
 
 # Save the maze as hex rows plus entry, exit, and shortest path.
 def write_maze(
-            filename: str,
-            maze_grid: List[List[int]],
-            entry: Tuple[int, int],
-            exit_pos: Tuple[int, int], path: str) -> None:
+    filename: str,
+    maze_grid: List[List[int]],
+    entry: Tuple[int, int],
+    exit_pos: Tuple[int, int],
+    path: str
+) -> None:
     try:
         with open(filename, 'w') as f:
             for row in maze_grid:
-                hex_line = ""
+                hex_line: str = ""
                 for cell in row:
                     hex_line += format(cell, 'x')
                 f.write(hex_line + "\n")
