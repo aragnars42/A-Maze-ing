@@ -2,7 +2,6 @@
 from typing import List, Tuple
 
 
-# Save the maze as hex rows plus entry, exit, and shortest path.
 def write_maze(
     filename: str,
     maze_grid: List[List[int]],
@@ -10,6 +9,15 @@ def write_maze(
     exit_pos: Tuple[int, int],
     path: str
 ) -> None:
+    """Save the maze as hex rows plus entry, exit, and shortest path.
+ 
+    Args:
+        filename: Path to the output file.
+        maze_grid: 2D list of cell wall values.
+        entry: Entry cell coordinates (x, y).
+        exit_pos: Exit cell coordinates (x, y).
+        path: Solution path string using N/S/E/W characters.
+    """
     try:
         with open(filename, 'w') as f:
             for row in maze_grid:

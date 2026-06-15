@@ -1,8 +1,8 @@
+# Draws the maze, the 42, and the path using MLX42.
 from mlx import Mlx  # type: ignore[import-untyped]
 from typing import Any, Optional as Opt
 from collections.abc import Callable
 from .mazegen import Maze
-# Draws the maze, the 42, and the path using MLX42.
 
 # Maze color selection
 COLOR_WALL: int = 0xD9ADD1FF
@@ -20,6 +20,7 @@ COLOR_P: list[tuple[int, int, int, int]] = [
 
 
 class KEY_CODES:
+    """X11 keysym codes for MLX key hook and numpad equivalents."""
     KEY_ESC: int = 65307
     KEY_1: int = 65436
     NUM_1: int = 49
@@ -31,8 +32,17 @@ class KEY_CODES:
     NUM_4: int = 52
 
 
-# Handles window creation and maze rendering.
 class Graphics:
+    """Handles MLX window creation and maze rendering.
+ 
+    Args:
+        maze: The maze object to display.
+        entry: Entry cell coordinates (x, y).
+        exit_pos: Exit cell coordinates (x, y).
+        path: Solution path string using N/S/E/W characters.
+        regen_callback:
+        Optional callable that returns a new (maze, path) tuple.
+    """
     def __init__(
         self,
         maze: Maze,
@@ -41,6 +51,7 @@ class Graphics:
         path: str,
         regen_callback: Opt[Callable[[], tuple[Maze, str]]] = None
     ) -> None:
+        """Initialize the Graphics object and create the MLX window."""
         self.mlx: Mlx = None
         self.mlx_ptr: Any = None
         self.maze: Maze = maze
@@ -80,8 +91,8 @@ class Graphics:
         except IOError as e:
             print("ERROR - Unable to create window", e)
 
-    # Paint entry, path, and exit cells.
     def draw_entry_exit(self) -> None:
+        """Draw the entry and exit cells in their palette colors."""
         entry_x: int = self.entry[0] * self.cell_size
         entry_y: int = self.entry[1] * self.cell_size
         for screen_x in range(entry_x, entry_x + self.cell_size):
@@ -103,6 +114,7 @@ class Graphics:
                                     COLOR_P[self.color_idx][2])
 
     def draw_path(self) -> None:
+        """Draw the solution path cells in the current palette path color."""
         current_x: int = self.entry[0]
         current_y: int = self.entry[1]
         for direction in self.path:
@@ -128,8 +140,8 @@ class Graphics:
                             COLOR_P[self.color_idx][3]
                         )
 
-    # Draw walls and fill fully closed 42 cells.
     def draw_maze(self) -> None:
+        """Draw all maze walls and filled cells including the 42 pattern."""
         for y in range(0, self.maze.height):
             for x in range(0, self.maze.width):
                 self.maze.get_cell(x, y)
@@ -190,6 +202,7 @@ class Graphics:
                                             )
 
     def draw_hint(self) -> None:
+        """Draw the key hint text at the bottom of the window."""
         hint_y: int = self.maze.height * self.cell_size + 5
         self.mlx.mlx_string_put(
                                 self.mlx_ptr,
@@ -199,8 +212,13 @@ class Graphics:
                                 "1: regen; 2: path; 3: color; 4: quit"
                             )
 
-    # Build the final image and display it.
     def key_code(self, keycode: int, _: Any) -> None:
+        """Handle key press events from the MLX key hook.
+ 
+        Args:
+            keycode: The X11 keysym code of the pressed key.
+            _: Unused param passed by mlx_key_hook.
+        """
         match keycode:
             case KEY_CODES.KEY_1 | KEY_CODES.NUM_1:
                 if self.regen_callback is not None:
@@ -231,6 +249,7 @@ class Graphics:
                 self.mlx.mlx_loop_exit(self.mlx_ptr)
 
     def render(self) -> None:
+        """Render the maze and start the MLX event loop."""
         self.draw_path()
         self.draw_entry_exit()
         self.draw_maze()
