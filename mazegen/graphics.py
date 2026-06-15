@@ -148,8 +148,8 @@ class Graphics:
                 pixel_x: int = x * self.cell_size
                 pixel_y: int = y * self.cell_size
 
-                # If all four walls are closed
-                # (cell == 15), draw a filled block
+                """If all four walls are closed (cell == 15),
+                draw a filled block"""
                 cell: int = self.maze.get_cell(x, y)
                 if cell == 15:
                     for screen_x in range(pixel_x, pixel_x + self.cell_size):
@@ -164,7 +164,7 @@ class Graphics:
                                                 )
                     continue
 
-                # Otherwise draw individual walls as before
+                """Otherwise draw individual walls as before"""
                 if self.maze.has_wall(x, y, 0):
                     for screen_x in range(pixel_x, pixel_x + self.cell_size):
                         self.mlx.mlx_pixel_put(
