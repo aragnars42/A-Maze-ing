@@ -70,7 +70,7 @@ class MazeGenerator:
             It is not present in the given exclusion pattern.
         Each returned neighbor includes its
         coordinate and the direction
-        metadata used to move from the current cell
+        used to move from the current cell
         to that neighbor.
 
         Args:
