@@ -28,7 +28,7 @@ class KEY_CODES:
     NUM_2: int = 50
     KEY_3: int = 65435
     NUM_3: int = 51
-    KEY_4: int = 65430 | 52
+    KEY_4: int = 65430
     NUM_4: int = 52
 
 
