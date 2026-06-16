@@ -10,7 +10,7 @@ A Python-based maze generation and visualization system using Depth-First Search
 
 ## Description
 
-A-Maze-ing is a maze generation program that creates random rectangular mazes and displays them graphically using MLX42. The program generates a perfect (or imperfect) maze using DFS, identifies the shortest path from entry to exit using BFS, and renders the result with color-coded visualization (entry, exit, path, and walls). A signature 42 logo is drawn at the center of each generated maze.
+A-Maze-ing is a maze generation program that creates random rectangular mazes and displays them graphically using MLX42. The program generates a perfect (or imperfect) maze using DFS, identifies the shortest path from entry to exit using BFS, and renders the result with color-coded visualization (entry, exit, path, and walls). A signature 42 logo is drawn at the center of each generated maze. 
 
 ---
 
@@ -175,11 +175,13 @@ Every generated maze displays the iconic "42" logo at its center:
 - Drawn after maze generation and wall normalization.
 - Path finding automatically routes around the logo.
 
-### Wall Normalization (`check_wall()`)
+### User interaction
 
-Prevents large 2×2 empty regions (considered invalid in maze design) by:
-- Detecting 2×2 cells with no internal walls.
-- Closing strategic walls to break the region into smaller passageways.
+The user has four differnt options to interact with the program:
+1. Regenerate the maze.
+2. Show/hide the path.
+3. Change the colorway.
+4. Quit the program.
 
 ---
 
@@ -246,7 +248,7 @@ Prevents large 2×2 empty regions (considered invalid in maze design) by:
 ### AI Usage
 
 AI tools were used in this project for:
-- **Debugging:** Identifying import path issues and thread safety.
+- **Debugging:** Identifying import path issues for the mlx wrapper and thread safety.
 - **Learning:** Understanding MLX42 API patterns and Python best practices.
 
 **AI was NOT used for:**
